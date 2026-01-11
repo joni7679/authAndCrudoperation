@@ -9,10 +9,11 @@ const cors = require("cors")
 dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors(
-    origin = process.env.CLIENT_URL,
-    credentials = true,
-))
+app.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+}));
+
 connectDB();
 const port = 3000;
 app.get('/', (req, res) => {

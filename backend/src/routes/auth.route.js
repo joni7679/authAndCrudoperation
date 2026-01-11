@@ -5,5 +5,5 @@ const router = express.Router();
 router.post('/register', userRegister);
 router.post('/login', loginUser)
 router.post("/logout", logOut)
-router.get('/perofile', authMiddlware, perofile)
+router.get('/profile', authMiddlware, perofile)
 module.exports = router

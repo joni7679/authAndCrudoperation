@@ -7,6 +7,7 @@ import TodoApp from "../../components/TodoApp";
 import DeleteModel from "../../components/DeleteModel";
 import EditTodo from "../../components/EditTodo";
 import DisplayData from "../../components/DisplayData";
+import Header from "./Header";
 ;
 
 export default function DashBoard() {
@@ -30,11 +31,12 @@ export default function DashBoard() {
     const fetchTasks = async () => {
         setLoading(true)
         try {
-            let taskData = await fetch(`${api}/task/alltasks`);
+            let taskData = await fetch(`${api}/task/alltasks`, {
+                credentials: "include"
+            });
+
             let res = await taskData.json();
             setLoading(false);
-            console.log(res.data);
-
             setTasks(res.data)
         } catch (error) {
             console.log("error", error);
@@ -58,9 +60,15 @@ export default function DashBoard() {
             toast.error(" this filled is required !")
             return
         }
+        if (!content) {
+            toast.error(" this Description filled is required !")
+            return
+        }
         setLoading(true)
         try {
-            const data = await axios.post(`${api}/task/cratetask`, createTask);
+            const data = await axios.post(`${api}/task/cratetask`, createTask, {
+                withCredentials: true
+            });
             console.log("task add data here", data);
             toast.success("Task add successfully")
             setCreateTask(false);
@@ -81,7 +89,9 @@ export default function DashBoard() {
     const confirmDelete = async () => {
         setLoading(true)
         try {
-            await axios.delete(`${api}/task/deletetask/${deleteId}`)
+            await axios.delete(`${api}/task/deletetask/${deleteId}`, {
+                withCredentials: true
+            })
             toast.success("Task delete successfully")
             handelDeletepopUp()
             fetchTasks()
@@ -118,26 +128,26 @@ export default function DashBoard() {
 
     return (
         <>
-            <main>
-                <section className=" bg-gray-100 p-6 relative min-h-screen  overflow-hidden">
+            <main className="relative w-full min-h-screen">
+                <Header />
+                {
+                    createTask && <div className="overly w-full h-full absolute z-10"></div>
+                }
+                <section className=" bg-gray-100 p-6 relative min-h-screen  overflow-hidden ">
                     <div className="flex items-center justify-between">
                         <h1 className='font-semibold  text-2xl capitalize'>task List app</h1>
                         <button onClick={tooglecreateNote} className='px-4 py-2 bg-green-500 mb-3.5 text-white rounded-2xl capitalize cursor-pointer'>
                             Add New Task
                         </button>
                     </div>
-                    <Searching handleOnChange={handleOnChange} searchTask={searchTask} handleTask={handleSearch} setSearchTask={setSearchTask} />
-                    <div className={`absolute w-full h-full cursor-pointer  ${createTask ? "top-1/2" : "top-[-60%]"} left-1/2 transform  -translate-x-1/2 -translate-y-1/2 duration-150 transition-all`}>
-                        <div className="overly w-full h-full absolute z-10"></div>
-                        <div className="relative z-50">
+                    <div className={`absolute w-full h-full cursor-pointer  `}>
+                        <div className={`relative z-50 ${createTask ? "top-[30%]" : "top-[-60%]"} left-1/2 transform  -translate-x-1/2 -translate-y-1/2 duration-150 transition-all`}>
                             <TodoApp loading={loading} title={title} setTitle={setTitle} content={content} setContent={setContent} postdata={postdata} tooglecreateNote={tooglecreateNote} />
                         </div>
                     </div>
-
                     <div className={` w-full h-full flex items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  duration-150 ${deletemodel ? "scale-[1.2]" : "scale-0"} `}>
                         <DeleteModel loading={loading} confirmDelete={confirmDelete} handelDeletepopUp={handelDeletepopUp} />
                     </div>
-
                     <div className={`absolute w-full h-full    ${editModal ? "top-1/2" : "top-[-60%]"} left-1/2 transform  -translate-x-1/2 -translate-y-1/2 duration-150 transition-all`}>
                         <div className="overly w-full h-full absolute z-10"></div>
                         <div className="relative z-50">

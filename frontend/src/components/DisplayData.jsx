@@ -22,13 +22,13 @@ const DisplayData = ({ tasks, deleteData, updateData, markCompleteTask }) => {
                                             <div>
                                                 <div className='flex items-center gap-2'>
                                                     <h1 className={`font-semibold capitalize text-xl ${status === "Complete" ? "line-through" : ""}`}>{title}</h1>
-                                                    <p className={
+                                                    {/* <p className={
                                                         `text-sm  p-2 rounded-2xl capitalize
                                                     ${status === "Complete" ? "bg-green-400 text-white" : "bg-yellow-400 text-white"}`}>
                                                         {
                                                             status === "Complete" ? "Complete" : "Pending"
                                                         }
-                                                    </p>
+                                                    </p> */}
                                                 </div>
                                                 <p className=' mt-5'>
                                                     {new Date(createdAt).toLocaleString("en-IN")}
