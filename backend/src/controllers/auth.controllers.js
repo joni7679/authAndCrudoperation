@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken")
 const validator = require('validator');
 const isProduction = process.env.NODE_ENV === "production";
+
+console.log("isProduction:", isProduction);
 exports.userRegister = async (req, res) => {
     const { name, email, password } = req.body;
     if (!name || !email || !password) {

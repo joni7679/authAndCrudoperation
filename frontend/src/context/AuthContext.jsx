@@ -22,6 +22,10 @@ function AuthDataProvider({ children }) {
         }
         finally {
             setLoading(false)
+            setTimeout(() => { 
+                setError(null)
+                setSuccess(null)
+            }, 5000)
         }
     }
     const loginUser = async ({ email, password }) => {
@@ -37,6 +41,10 @@ function AuthDataProvider({ children }) {
         }
         finally {
             setLoading(false)
+            setTimeout(() => { 
+                setError(null)
+                setSuccess(null)
+            }, 5000)
         }
     }
 
