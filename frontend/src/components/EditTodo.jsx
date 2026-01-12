@@ -25,7 +25,7 @@ const EditTodo = ({ tooglepoupu, editData, fetchNotesData }) => {
         setLoading(true)
         try {
             const update = { title, content };
-            await axios.put(`${api}/task/${editData._id}`, update);
+            await axios.put(`${api}/task/edittask/${editData._id}`, update, { withCredentials: true });
             toast.success("Task Update Success fully !")
             setLoading(false)
             fetchNotesData()
@@ -39,7 +39,7 @@ const EditTodo = ({ tooglepoupu, editData, fetchNotesData }) => {
         <>
             <div className='px-6 md:px-12 container mx-auto flex items-center justify-center flex-col z-50 '>
                 <div className="card max-w-md w-full shadow-lg rounded mt-5 p-5 bg-white relative">
-                    <RxCross1   onClick={tooglepoupu} className='text-xl absolute right-0 to-[-10px] cursor-pointer' />
+                    <RxCross1 onClick={tooglepoupu} className='text-xl absolute right-0 to-[-10px] cursor-pointer' />
                     <form onSubmit={updateTask} action="">
                         <h1 className='font-semibold capitalize'>Update Task</h1>
                         <div className="input- mt-5">

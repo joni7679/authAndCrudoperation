@@ -22,7 +22,6 @@ export default function DashBoard() {
     const [searchTask, setSearchTask] = useState("");
     const [deletemodel, setDeleteModel] = useState(false)
     const [deleteId, setDeleteId] = useState(null)
-
     const api = import.meta.env.VITE_BACKEND_URL;
     // delete
     const handelDeletepopUp = () => {
@@ -34,7 +33,6 @@ export default function DashBoard() {
             let taskData = await fetch(`${api}/task/alltasks`, {
                 credentials: "include"
             });
-
             let res = await taskData.json();
             setLoading(false);
             setTasks(res.data)
@@ -81,17 +79,15 @@ export default function DashBoard() {
         }
     }
     // delete logic here...
-    const deleteData = async (id) => {
-        console.log("id", id)
-        setDeleteId(id);
+    const deleteTask = async (id) => {
+
+        setDeleteId(id)
         setDeleteModel(true)
     }
     const confirmDelete = async () => {
         setLoading(true)
         try {
-            await axios.delete(`${api}/task/deletetask/${deleteId}`, {
-                withCredentials: true
-            })
+            await axios.delete(`${api}/task/deletetask/${deleteId}`, { withCredentials: true })
             toast.success("Task delete successfully")
             handelDeletepopUp()
             fetchTasks()
@@ -104,23 +100,21 @@ export default function DashBoard() {
         }
     }
 
-    // update logic here
-    const updateData = async (id) => {
-        console.log("update task", id);
+
+    const updateedTask = async (id) => {
+        const res = await axios.get(`${api}/task/gettask/${id}`, { withCredentials: true });
+        console.log("edit data", res.data.data);
+        setEditModal(true);
+        setEditData(res.data.data)
     }
 
     // complete task logic here
     const markCompleteTask = async (id) => {
-        console.log("id", id);
+        alert("Task ID: " + id);
+        console.log("Task ID:", id);
     };
-    // hanleonchange
-    const handleOnChange = (e) => {
-        setSearchTask(e.target.value);
-    }
-    const handleSearch = () => {
-        const filterTasks = tasks.filter(task => task.title.toLowerCase().includes(searchTask.toLocaleLowerCase()))
-        setTasks(filterTasks)
-    }
+
+
 
     useEffect(() => {
         fetchTasks();
@@ -128,11 +122,8 @@ export default function DashBoard() {
 
     return (
         <>
-            <main className="relative w-full min-h-screen">
+            <main className="relative w-full ">
                 <Header />
-                {
-                    createTask && <div className="overly w-full h-full absolute z-10"></div>
-                }
                 <section className=" bg-gray-100 p-6 relative min-h-screen  overflow-hidden ">
                     <div className="flex items-center justify-between">
                         <h1 className='font-semibold  text-2xl capitalize'>task List app</h1>
@@ -140,21 +131,18 @@ export default function DashBoard() {
                             Add New Task
                         </button>
                     </div>
-                    <div className={`absolute w-full h-full cursor-pointer  `}>
-                        <div className={`relative z-50 ${createTask ? "top-[30%]" : "top-[-60%]"} left-1/2 transform  -translate-x-1/2 -translate-y-1/2 duration-150 transition-all`}>
-                            <TodoApp loading={loading} title={title} setTitle={setTitle} content={content} setContent={setContent} postdata={postdata} tooglecreateNote={tooglecreateNote} />
-                        </div>
+                    <div className={`absolute w-full h-full z-50 ${createTask ? "top-[50%]" : "top-[-60%]"} left-1/2 transform  -translate-x-1/2 -translate-y-1/2 duration-150 transition-all`}>
+                        <TodoApp loading={loading} title={title} setTitle={setTitle} content={content} setContent={setContent} postdata={postdata} tooglecreateNote={tooglecreateNote} />
                     </div>
                     <div className={` w-full h-full flex items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  duration-150 ${deletemodel ? "scale-[1.2]" : "scale-0"} `}>
-                        <DeleteModel loading={loading} confirmDelete={confirmDelete} handelDeletepopUp={handelDeletepopUp} />
+                        <DeleteModel confirmDelete={confirmDelete} loading={loading} handelDeletepopUp={handelDeletepopUp} />
                     </div>
                     <div className={`absolute w-full h-full    ${editModal ? "top-1/2" : "top-[-60%]"} left-1/2 transform  -translate-x-1/2 -translate-y-1/2 duration-150 transition-all`}>
-                        <div className="overly w-full h-full absolute z-10"></div>
                         <div className="relative z-50">
                             <EditTodo tooglepoupu={tooglepoupu} editData={editData} fetchTasks={fetchTasks} />
                         </div>
                     </div>
-                    <DisplayData loading={loading} searchloading={searchloading} markCompleteTask={markCompleteTask} tasks={tasks} deleteData={deleteData} updateData={updateData} />
+                    <DisplayData loading={loading} searchloading={searchloading} markCompleteTask={markCompleteTask} tasks={tasks} updateedTask={updateedTask} deleteTask={deleteTask} />
                 </section>
             </main>
         </>

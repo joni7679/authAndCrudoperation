@@ -23,8 +23,8 @@ const TodoApp = ({ loading, title, setTitle, content, setContent, postdata, toog
                                 onChange={(e) => setContent(e.target.value)}
                             ></textarea>
                         </div>
-                        <button disabled={loading} className={`px-4 py-2 rounded-2xl bg-blue-500 text-white capitalize text-
-                        xl w-full mt-5 cursor-pointer  ${loading ? "cursor-not-allowed" : ""}`}>
+                        <button disabled={loading} className={`px-4 py-2 rounded-2xl  text-white capitalize text-
+                        xl w-full mt-5   ${loading ? "cursor-not-allowed bg-blue-200" : "cursor-pointer bg-blue-500"}`}>
                             {loading ? "Loading..." : "Add Task"}
                         </button>
                     </form>

@@ -52,7 +52,6 @@ exports.getAllTasks = async (req, res) => {
 exports.getTaskById = async (req, res) => {
     const { id } = req.params;
     const userId = req.userId;
-    console.log("taskid", id);
     if (!id) {
         return res.status(400).json(
             {

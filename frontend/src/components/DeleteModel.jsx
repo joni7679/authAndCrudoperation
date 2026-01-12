@@ -2,7 +2,7 @@ import React from 'react'
 import { MdDelete } from "react-icons/md";
 import { ImCancelCircle } from "react-icons/im";
 
-const DeleteModel = ({ confirmDelete, handelDeletepopUp, loading }) => {
+const DeleteModel = ({ confirmDelete ,loading ,handelDeletepopUp }) => {
     return (
         <>
             <div className='w-full max-w-md rounded-3xl shadow-2xl px-3 py-5 relative h-52 bg-white'>
@@ -19,8 +19,8 @@ const DeleteModel = ({ confirmDelete, handelDeletepopUp, loading }) => {
                         xl w-full mt-5 cursor-pointer  '>cancel
                             <ImCancelCircle className='inline-block' />
                         </button>
-                        <button disabled={loading} onClick={confirmDelete} type='submit' className={`px-4 cursor-pointer py-2 rounded-2xl bg-red-500 text-white capitalize text-
-                        xl w-full mt-5  ${loading ? "cursor-not-allowed" : ""}  `}>
+                        <button onClick={confirmDelete} type='submit' className={`px-4  py-2 rounded-2xl bg-red-500 text-white capitalize text-
+                        xl w-full mt-5    `}>
                             {!loading ? " Delete" : "Deleting..."}
                         </button>
                     </div>
