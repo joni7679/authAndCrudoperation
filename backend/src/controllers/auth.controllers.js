@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken")
 const validator = require('validator');
 const isProduction = process.env.NODE_ENV === "production";
+console.log("isprd",isProduction);
 
 console.log("isProduction:", isProduction);
 exports.userRegister = async (req, res) => {
@@ -140,7 +141,11 @@ exports.perofile = async (req, res) => {
     }
 }
 exports.logOut = async (req, res) => {
-    res.clearCookie("token");
+    res.clearCookie("token",{
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? "none" : "lax",
+    });
     return res.status(200).json({
         success: true,
         message: "Logout successfully"
