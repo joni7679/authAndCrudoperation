@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken")
 const validator = require('validator');
 const isProduction = process.env.NODE_ENV === "production";
-console.log("isprd",isProduction);
+console.log("isprd", isProduction);
 
 console.log("isProduction:", isProduction);
 exports.userRegister = async (req, res) => {
@@ -52,8 +52,8 @@ exports.userRegister = async (req, res) => {
         res.cookie("token", token
             , {
                 httpOnly: true,
-                secure: isProduction,
-                sameSite: isProduction ? "none" : "lax",
+                secure: true,
+                sameSite: none,
                 maxAge: 2 * 24 * 60 * 60 * 1000
             }
         )
@@ -106,8 +106,8 @@ exports.loginUser = async (req, res) => {
         res.cookie("token", token
             , {
                 httpOnly: true,
-                secure: isProduction,
-                sameSite: isProduction ? "none" : "lax",
+                secure: true,
+                sameSite: "none",
                 maxAge: 2 * 24 * 60 * 60 * 1000
             }
         )
@@ -141,10 +141,10 @@ exports.perofile = async (req, res) => {
     }
 }
 exports.logOut = async (req, res) => {
-    res.clearCookie("token",{
+    res.clearCookie("token", {
         httpOnly: true,
-        secure: isProduction,
-        sameSite: isProduction ? "none" : "lax",
+        secure: true,
+        sameSite: "none",
     });
     return res.status(200).json({
         success: true,
