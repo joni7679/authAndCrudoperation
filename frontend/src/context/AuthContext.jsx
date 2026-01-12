@@ -22,7 +22,7 @@ function AuthDataProvider({ children }) {
         }
         finally {
             setLoading(false)
-            setTimeout(() => { 
+            setTimeout(() => {
                 setError(null)
                 setSuccess(null)
             }, 5000)
@@ -41,7 +41,7 @@ function AuthDataProvider({ children }) {
         }
         finally {
             setLoading(false)
-            setTimeout(() => { 
+            setTimeout(() => {
                 setError(null)
                 setSuccess(null)
             }, 5000)
@@ -50,12 +50,19 @@ function AuthDataProvider({ children }) {
 
     const userAuth = async () => {
         try {
+            setLoading(true)
             const user = await axios.get(`${api}/auth/profile`, { withCredentials: true });
             setUser(user.data.data)
             return user.data.data
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            setUser(null)
         }
+        finally {
+            setLoading(false)
+        }
+
+
     }
 
     const logOutUser = async () => {
